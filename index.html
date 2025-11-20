@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://github.com/sheenaruzive3/Jane-Rivulet-Academy-Website/blob/main/android-chrome-512x512(1).png?raw=true">
+    <link rel="icon" type="image/png"
+        href="https://github.com/sheenaruzive3/Jane-Rivulet-Academy-Website/blob/main/android-chrome-512x512(1).png?raw=true">
+
     <title>Jane Rivulet Academy</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* RESET */
         * {
             margin: 0;
             padding: 0;
@@ -19,48 +23,158 @@
         }
 
         body {
-            background-color: #f3f7fa;
+            background: #f3f7fa;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         /* HEADER */
         header {
             width: 100%;
-            padding: 15px 50px;
+            padding: 15px 40px;
             background: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
         .logo {
-            width: 220px;
-            height: 220px;
-            left: 100px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
-            border-radius: 30%
-             }
+            width: 120px;
+            border-radius: 30%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
 
         nav ul {
             display: flex;
             list-style: none;
             gap: 30px;
+            align-items: center;
         }
 
         nav a {
             text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 500;
+            font-size: 1.1rem;
             color: #0056b3;
+            font-weight: 500;
             transition: 0.3s;
         }
 
         nav a:hover {
             color: #093058;
-            text-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
+        }
+
+        /* DROPDOWN BASE */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 45px;
+            left: 0;
+            background: white;
+            min-width: 180px;
+            border-radius: 10px;
+            padding: 10px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            display: none;
+            flex-direction: column;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: flex;
+        }
+
+        .dropdown-menu a {
+            padding: 10px 18px;
+            color: #0056b3;
+        }
+
+        .dropdown-menu a:hover {
+            background: #e8f0fe;
+            border-left: 4px solid #0056b3;
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #093058;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* ANIMATION */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* MOBILE NAV */
+        @media (max-width: 768px) {
+            nav ul {
+                position: absolute;
+                top: 80px;
+                right: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px 0;
+                gap: 20px;
+                align-items: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-200%);
+                pointer-events: none;
+                opacity: 0;
+                transition: 0.3s ease;
+            }
+
+            nav ul.active {
+                transform: translateY(0);
+                pointer-events: auto;
+                opacity: 1;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: none;
+            }
+
+            .dropdown-menu {
+                position: relative;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                background: #f7faff;
+                display: none;
+            }
+
+            .dropdown.open .dropdown-menu {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
         }
 
         /* HERO */
@@ -71,22 +185,18 @@
             overflow: hidden;
         }
 
-        .hero-slideshow {
+        .hero-slideshow,
+        .slide {
             height: 100%;
             width: 100%;
-            position: relative;
         }
 
         .slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.4s;
         }
 
         .slide.active {
@@ -99,7 +209,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45);
             z-index: 2;
         }
 
@@ -115,19 +225,18 @@
 
         .hero-content h1 {
             font-size: 3rem;
-            margin-bottom: 10px;
             color: white;
         }
 
         .btn {
+            padding: 12px 30px;
             background: #3b82f6;
-            padding: 12px 28px;
             color: white;
-            text-decoration: none;
             border-radius: 8px;
-            font-size: 1.1rem;
-            margin-top: 15px;
+            text-decoration: none;
+            font-size: 1.2rem;
             display: inline-block;
+            margin-top: 20px;
             transition: 0.3s;
         }
 
@@ -135,7 +244,7 @@
             background: #1e40af;
         }
 
-        /* HOME CONTENT */
+        /* HOME */
         #Home {
             padding: 60px;
             max-width: 900px;
@@ -143,18 +252,18 @@
         }
 
         #Home h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
         }
 
         .welcome-message {
             padding: 30px;
-            border: 2px solid #3b82f6;
-            border-radius: 20px;
             background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            line-height: 1.7rem;
+            border-radius: 20px;
+            border: 2px solid #3b82f6;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            line-height: 1.7;
             font-size: 1.1rem;
         }
 
@@ -162,9 +271,9 @@
         footer {
             background: #0056b3;
             padding: 30px;
-            margin-top: 80px;
             color: white;
             text-align: center;
+            margin-top: 80px;
         }
 
         footer address,
@@ -172,86 +281,156 @@
         footer telephone {
             display: block;
             color: white;
-            margin-bottom: 8px;
             font-style: normal;
+            margin-top: 10px;
         }
-        html { scroll-behavior: smooth; }
-        }
-         </style>
+    </style>
 </head>
 
 <body>
 
-<header>
-    <a href="index.html">
-        <img class="logo" src="https://github.com/sheenaruzive3/Jane-Rivulet-Academy-Website/blob/main/524459393_24384236734505006_8221463529767492508_n.jpg?raw=true" />
-    </a>
+    <!-- HEADER -->
+    <header>
+        <a href="index.html">
+            <img class="logo"
+                src="https://github.com/sheenaruzive3/Jane-Rivulet-Academy-Website/blob/main/524459393_24384236734505006_8221463529767492508_n.jpg?raw=true">
+        </a>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="About-Us.html">About Us</a></li>
-            <li><a href="Curriculumn.html">Curriculumn</a></li>
-            <li><a href="Contact-Us.html">Contact Us</a></li>
-            <li><a href="Notice.html">Notice Board</a></li>
-            <li><a href="Gallery.html">Gallery</a></li>
-        </ul>
-    </nav>
-</header>
+        <nav>
+            <ul id="nav-menu">
 
-<section class="hero">
-    <div class="overlay"></div>
-    <div class="hero-slideshow">
-        <div class="slide active" style="background-image: url('https://img.freepik.com/free-photo/front-view-stacked-books-ladders-with-copy-space-education-day_23-2149241015.jpg?w=360');"></div>
-        <div class="slide" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQazwFvJ6eRnELEPQOnnYN7JQZhpTPt2eGnUw&s');"></div>
-        <div class="slide" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV9BGuPvELSHycmPYIMVIeBoca9_udEYljgA&s');"></div>
-    </div>
+                <li><a href="index.html">Home</a></li>
 
-    <div class="hero-content">
-        <h1>Welcome to Jane Rivulet Academy</h1>
-        <a class="btn" href="#Home">Explore More</a>
-    </div>
-</section>
+                <!-- About dropdown -->
+                <li class="dropdown">
+                    <a href="#">About Us ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="About-Us.html">Who We Are</a>
+                        <a href="Mission.html">Our Mission</a>
+                        <a href="Vision.html">Our Vision</a>
+                        <a href="Values.html">Our Values</a>
+                    </div>
+                </li>
 
- <section id="Home">
-<h2><em>Welcome,   Tinokugamuchirai,   Siyakuwamkela</emem></h2>
-<div class="welcome-message">
+                <!-- Curriculum dropdown -->
+                <li class="dropdown">
+                    <a href="#">Curriculum ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="Curriculumn.html">Curriculum Overview</a>
+                        <a href="ECD-A.html">ECD A</a>
+                        <a href="ECD-B.html">ECD B</a>
+                        <a href="Grades.html">Grade 1–7</a>
+                    </div>
+                </li>
 
-<p><strong>Welcome to Jane Rivulet Academy</strong> — a home of learning, love, and purpose.</p>
-<br>
-<p>Nestled on a peaceful peri-urban farm along Harmony Road in Harben Park, Gweru, our school proudly serves the surrounding farm community with a deep sense of responsibility and compassion. At Jane Rivulet Academy, we believe every child deserves access to quality education, and we are committed to creating an environment where all learners can grow, thrive, and discover their God-given potential.</p>
-<br>
-<p>Our mission is to nurture children academically, socially, and spiritually—empowering them with the knowledge, skills, and character needed for excellence in both school and life. We strive to build a happy, safe, and supportive space where learners develop a genuine love for learning, one that will guide and strengthen them throughout their lives. Here, we encourage every child to “drink from the streams of knowledge,” growing into confident future leaders and responsible, God-fearing citizens of tomorrow.</p>
-<br>
-<p>Our Christian values are woven into our daily operations, guiding everything we do with integrity, care, and purpose. If you are seeking a school that places your child’s best interests at heart, then Jane Rivulet Academy is your home.</p>
-<br>
-<p>We warmly welcome you to our family.</p>
-<br>
-<p><em>Your Principal: Mrs Ruzive</em></p>
-</p>
-</div>
-</section>
+                <li><a href="Contact-Us.html">Contact Us</a></li>
+                <li><a href="Notice.html">Notice Board</a></li>
+                <li><a href="Gallery.html">Gallery</a></li>
+            </ul>
+        </nav>
 
-<footer>
-    <address>Plot 29B Umsungwe B, Harmony Road, Harben Park, Gweru, Zimbabwe</address>
-    <email>jane.rivulet@gmail.com</email>
-    <telephone>+263 ** *** **** </telephone>
-</footer>
+        <!-- Hamburger -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
 
-<script>
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+    <!-- HERO -->
+    <section class="hero">
+        <div class="overlay"></div>
 
-function nextSlide() {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add('active');
-}
+        <div class="hero-slideshow">
+            <div class="slide active"
+                style="background-image: url('https://img.freepik.com/free-photo/front-view-stacked-books-ladders-with-copy-space-education-day_23-2149241015.jpg?w=360');">
+            </div>
 
-setInterval(nextSlide, 5000);
+            <div class="slide"
+                style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQazwFvJ6eRnELEPQOnnYN7JQZhpTPt2eGnUw&s');">
+            </div>
 
-</script>
+            <div class="slide"
+                style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV9BGuPvELSHycmPYIMVIeBoca9_udEYljgA&s');">
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1>Welcome to Jane Rivulet Academy</h1>
+            <a href="#Home" class="btn">Explore More</a>
+        </div>
+    </section>
+
+    <!-- HOME SECTION -->
+    <section id="Home">
+        <h2><em>Welcome, Tinokugamuchirai, Siyakwamukela</em></h2>
+
+        <div class="welcome-message">
+            <p><strong>Welcome to Jane Rivulet Academy</strong> — a home of learning, love, and purpose.</p><br>
+
+            <p>Nestled on a peaceful peri-urban farm along Harmony Road in Harben Park, Gweru, our school proudly serves
+                the surrounding farm community with a deep sense of responsibility and compassion. At Jane Rivulet
+                Academy, we believe every child deserves access to quality education, and we are committed to creating
+                an environment where all learners can grow, thrive, and discover their God-given potential.</p><br>
+
+            <p>Our mission is to nurture children academically, socially, and spiritually—empowering them with the
+                knowledge, skills, and character needed for excellence in both school and life. We strive to build a
+                happy, safe, and supportive space where learners develop a genuine love for learning, one that will guide
+                and strengthen them throughout their lives. Here, we encourage every child to “drink from the streams of
+                knowledge,” growing into confident future leaders and responsible, God-fearing citizens of tomorrow.</p><br>
+
+            <p>Our Christian values are woven into our daily operations, guiding everything we do with integrity, care,
+                and purpose. If you are seeking a school that places your child’s best interests at heart, then Jane
+                Rivulet Academy is your home.</p><br>
+
+            <p>We warmly welcome you to our family.</p><br>
+
+            <em>— Your Principal: Mrs Ruzive</em>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <address>Plot 29B Umsungwe B, Harmony Road, Harben Park, Gweru, Zimbabwe</address>
+        <email>jane.rivulet@gmail.com</email>
+        <telephone>+263 ** *** ****</telephone>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        /* SLIDESHOW */
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 5000);
+
+        /* MOBILE MENU LOGIC */
+        const hamburger = document.getElementById("hamburger");
+        const navMenu = document.getElementById("nav-menu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        /* MOBILE DROPDOWNS */
+        const dropdowns = document.querySelectorAll(".dropdown");
+
+        dropdowns.forEach(drop => {
+            drop.addEventListener("click", () => {
+                if (window.innerWidth <= 768) {
+                    drop.classList.toggle("open");
+                }
+            });
+        });
+    </script>
 
 </body>
-</html>
 
+</html>
